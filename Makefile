@@ -11,7 +11,7 @@ CC = clang
 CFLAGS = --target=$(ARCH)-pc-none-elf -ffreestanding
 
 SWIFT = swiftc
-SWIFTFLAGS = -emit-library -emit-ir
+SWIFTFLAGS = -emit-library -emit-bc
 
 OBJS = start.o main.o mulodi4.o runtime.o globalinit.o
 
@@ -28,12 +28,12 @@ kernel.elf: $(OBJS)
 	$(AS) $< -o $@
 
 %.o: %.swift
-	$(SWIFT) $(SWIFTFLAGS) $< -o $@.ll
-	$(CC) $(CFLAGS) -c $@.ll -o $@
+	$(SWIFT) $(SWIFTFLAGS) $< -o $@.bc
+	$(CC) $(CFLAGS) -c $@.bc -o $@
 
 
 clean:
-	rm -f count *.o *.ll
+	rm -f count *.o *.bc
 
 
 run:
