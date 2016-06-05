@@ -8,10 +8,11 @@ public func kmain() {
 		i += 1
 	} while i < vramSize
 
-	vram[0] = 0xA48
-	vram[1] = 0xA65
-	vram[2] = 0xA6C
-	vram[3] = 0xA6C
-	vram[4] = 0xA6F
-	vram[5] = 0xA21
+	let s: StaticString = "Hello, World!"
+
+	i = 0
+	while i < s.byteSize {
+		vram[i] = UInt16(s.utf8Start[i]) | 0xA00
+		i += 1
+	}
 }
